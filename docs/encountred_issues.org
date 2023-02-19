@@ -1,0 +1,47 @@
++author: mal1kc
++title: encountred issues when using lazyboard
+
+* uploading code issues
+** arduinı ide
+0. adding digispark boards to ide/cli
+ * cli way
+
+   if config file exists
+   #+begin_src sh
+   arduino-cli config add board_manager.additional_urls "https://raw.githubusercontent.com/digistump/arduino-boards-index/master/package_digistump_index.json"
+    #+end_src
+    else
+    #+begin_src sh
+    arduino-cli config init --aditional-urls "https://raw.githubusercontent.com/digistump/arduino-boards-index/master/package_digistump_index.json"
+    #+end_src
+
+ * ide way
+
+   * linux related bug
+
+     see [[https://wiki.archlinux.org/title/Java#Gray_window,_applications_not_resizing_with_WM,_menus_immediately_closing][1.x Application not resizing with WM, menus immediately closing]]
+
+   file > preferences > additional boards manager urls > "https://raw.githubusercontent.com/digistump/arduino-boards-index/master/package_digistump_index.json"
+
+
+1. dont plug before starting uploading
+
+   in this chip we need to start uploading then plug device because after some time device can't be flashed
+
+2. Warning: device with unknown new version of Micronucleus detected.
+
+   see [[https://github.com/micronucleus/micronucleus/issues/130][github micronucleus issue]]
+
+   solutin from [[https://digistump.com/board/index.php/topic,1834.msg13109.html#msg13109][solution from digistump forum]]
+    #+begin_example
+    1. clone the source code for micronucleus from https://github.com/micronucleus/micronucleus
+    2. cd to directory named 'commandline'
+    3. ran the 'make' command to compile the micronucleus executable
+      - if encounter error about 'lib-usb' make sure your system have it if still error continues edit 'makefile' ; comment out 'STATIC = ..'
+    4. He then copied the resulting executable to his /home/username/.arduino15/packages/digistump/tools/micronucleus directory, renaming the old file first
+    5. And then tested it to make sure it worked as expected
+    6. if you are encountering udev rules error
+     - copy '49-micronucleus.rules to'  '/etc/udev/rules.d/'
+    #+end_example
+
+    #+RESULTS:
