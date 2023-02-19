@@ -1,37 +1,24 @@
-// setting tr(turkish) keyboard layout
 #define kbd_tr_tr
 #include "DigiKeyboard.h"
 
-// vals of buttons 
-// S1 = read val:    161
-// S2 = read val:    336
-// S3 = read val:    506
-// S4 = read val:    659
-// S5 = read val:    838
-// S6 = read val:    1023
-
-
-
 void setup() {
-  // disable input for 2,5 second for no startup errors
-  // and sending empty keystroke
-  DigiKeyboard.delay(2500);
+  // don't need to set anything up to use DigiKeyboard
+  DigiKeyboard.delay(2500);  // wait some time before first run, to give target
+                             // time to initialize
+  // this is generally not necessary but with some older systems it seems to
+  // prevent missing the first character after a delay:
   DigiKeyboard.sendKeyStroke(0);
+
+
 }
 
 void loop() {
-  // reading mechanic switch data and assigning into data variable
-  int data = analogRead(1);
-  if ( data > 100)
-  {
-    // writing "read val: " from keyboard
-    // WARN: error from library cannot print 'ğ' keyword
-    DigiKeyboard.print("read val:    ");
-    DigiKeyboard.print(data);
-    // sending 'return'/'enter' key stroke
-    DigiKeyboard.sendKeyStroke(KEY_ENTER);
-    while (analogRead(1) > 100);
-  }
-  // for ignoring analog read unstabilty to waiting very short time
-  DigiKeyboard.delay(50);
+  // Type out this string letter by letter on the computer (assumes US-style
+  // keyboard)
+  DigiKeyboard.println("Hello Digispark!");
+
+  // It's better to use DigiKeyboard.delay() over the regular Arduino delay()
+  // if doing keyboard stuff because it keeps talking to the computer to make
+  // sure the computer knows the keyboard is alive and connected
+  DigiKeyboard.delay(5000);
 }

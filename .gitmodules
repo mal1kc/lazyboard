@@ -1,0 +1,3 @@
+[submodule "lib/DigisparkKeyboard"]
+	path = lib/DigisparkKeyboard
+	url = https://github.com/ernesto-xload/DigisparkKeyboard

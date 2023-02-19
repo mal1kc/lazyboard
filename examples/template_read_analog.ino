@@ -1,20 +1,4 @@
-#define kbd_tr_tr // define keyboard layout
-#include "DigiKeyboard.h" // include library file
-
-// ------ led control ------
-
-#define led 1 // defining pin number
-
-void setup() {
-  pinMode(led, OUTPUT); // setting pinmode as output
-}
-
-void loop() {
-  digitalWrite(led, HIGH); // led on
-  delay(500);
-  digitalWrite(led, LOW); // led off
-  delay(500);
-}
+// ----- reading analog values -----
 
 // setting tr(turkish) keyboard layout
 #define kbd_tr_tr

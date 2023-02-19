@@ -14,7 +14,7 @@ read more detailed in [[https://lezzetlirobottarifleri.com/lazyboard-usengec-ama
 
 *** including library
 
-#+begin_src c :tangle ./src/template.ino
+#+begin_src c :tangle ./examples/template.ino
 #define kbd_tr_tr // define keyboard layout
 #include "DigiKeyboard.h" // include library file
 #+end_src
@@ -23,7 +23,7 @@ read more detailed in [[https://lezzetlirobottarifleri.com/lazyboard-usengec-ama
 
 all leds can be controlled via transistor that connected to PB1 port of attiny85, they can't be conntrolled separately.
 
-#+begin_src c :tangle ./src/template_led_control.ino
+#+begin_src c :tangle ./examples/template_led_control.ino
 
 // ------ led control ------
 
@@ -46,7 +46,7 @@ void loop() {
 attiny85 in lazyboard, that has internal uart or usb uart unit cause this reason we can't directly transfer analog data to serial monitor.But there is a trick,
 we can intruduce lazyboard as keyboard to pc than we can transfer datas like  printing with keyboard.
 
-#+begin_src c :tangle ./src/template_read_analog.ino
+#+begin_src c :tangle ./examples/template_read_analog.ino
 
 // ----- reading analog values -----
 
@@ -85,7 +85,7 @@ void loop() {
 
 like we can see in scheme if we press *S6* 2.2K resistance and under favour of 10K voltage divider data reading accurs. when we press *S5* 3.3K + 2.2K = 5.5K through voltage divider then accourdingly to that it comes to attiny85.in this senario we can understand which key is pressed.
 *WARN:we need to calibrate our buttons to work all buttons *
-#+begin_src c :tangle ./src/template_switch_control.ino
+#+begin_src c :tangle ./examples/template_switch_control.ino
 
 // ---- switch control -----
 
@@ -138,7 +138,7 @@ void loop() {
 **** intruducing remote control buttons
 with infrared in lazyboard we can use with infrared remote control devices.
 but we need to find buttons hex codes to configure buttons, for this we can use this code snippet.
-#+begin_src c :tangle ./src/template_rc_introduce.ino
+#+begin_src c :tangle ./examples/template_rc_introduce.ino
 #define kbd_tr_tr
 #include "DigiKeyboard.h"
 
@@ -193,7 +193,7 @@ void remoting()
 
 **** using remote control
 
-#+begin_src c :tangle ./src/template_rc_buttons.ino
+#+begin_src c :tangle ./examples/template_rc_buttons.ino
 #define kbd_tr_tr
 #include "DigiKeyboard.h"
 
