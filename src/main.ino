@@ -1,15 +1,14 @@
+
 #define kbd_tr_tr
 #include "DigiKeyboard.h"
 
 void setup() {
   // don't need to set anything up to use DigiKeyboard
-  DigiKeyboard.delay(2500);  // wait some time before first run, to give target
-                             // time to initialize
+  DigiKeyboard.delay(2500); // wait some time before first run, to give target
+                            // time to initialize
   // this is generally not necessary but with some older systems it seems to
   // prevent missing the first character after a delay:
   DigiKeyboard.sendKeyStroke(0);
-
-
 }
 
 void loop() {
