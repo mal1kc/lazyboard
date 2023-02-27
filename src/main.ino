@@ -1,12 +1,8 @@
 #define kbd_tr_tr
 #include <DigiKeyboard.h>
 
-// #define KEY_MEDIA_PLAYPAUSE 0xb0
-// #define KEY_MEDIA_NEXTSONG 0xeb5
-// #define KEY_MEDIA_PREVIOUSSONG 0xb6
-// #define KEY_MEDIA_STOPCD 0xb7
-
 #define led_pin 1
+
 // s1 read val:    161
 // s2 read val:    336
 // s3 read val:    506
@@ -30,13 +26,11 @@
 ** S6 ? maybe linux/windows change keys etc.
 ** ! TODO
 ** ! IMPORTANT
-** // if i get it right i need to change hid descriptor to use media keys
-** S2 prevMedia
-** S3 play/pauseMedia
-** S4 nextMedia
+** S2 prevMedia  ✔
+** S3 play/pauseMedia ✔
+** S4 nextMedia ✔
 **
 */
-
 bool led_toggle = 0;
 void LedToggle() {
   led_toggle == 1 ? digitalWrite(led_pin, LOW) : digitalWrite(led_pin, HIGH);
@@ -58,29 +52,20 @@ void PressInfo(int btn_id) {
   DigiKeyboard.sendKeyStroke(KEY_ENTER);
   LedToggle();
 }
-// void sendMediaKeyData(byte keyPress, byte modifiers) {
-//   while (!usbInterruptIsReady()) {
-//     // Note: We wait until we can send keyPress
-//     //       so we know the previous keyPress was
-//     //       sent.
-//     usbPoll();
-//     _delay_ms(5);
-//   }
-//   uint8_t specialKeyBuff[5] = {0, 0, 0, 0, 0};
-//   memset(specialKeyBuff, 0, sizeof(specialKeyBuff));
 
-//   specialKeyBuff[0] = 2;
-//   specialKeyBuff[1] = keyPress;
-
-//   usbSetInterrupt(specialKeyBuff, sizeof(specialKeyBuff));
-//   sendKeyPress(0, 0); // releaseKey
-// }
-
-void LedToggleNTimes(int n) {}
+void LedToggleNTimes(int n) {
+  uint8_t i = 0;
+  do {
+    LedToggle();
+    delay(50);
+    i++;
+  } while (i < n);
+}
 
 void loop() {
 
   int data = analogRead(1);
+  int d = 0;
   if (data > 100) {
     // if button 6 pressed we do this operations
     if (data > 1022) {
@@ -93,23 +78,28 @@ void loop() {
     // if button 4 pressed we do this operations
     else if (data > 658) {
 
-      DigiKeyboard.sendKeyStroke(0x01, 2);
-      LedToggle();
+      DigiKeyboard.sendMediaKeyStroke(KEY_MEDIA_NEXT);
+      // TODO unkown reason causes to pause media after pressing prev-next
+      DigiKeyboard.sendMediaKeyStroke(
+          KEY_MEDIA_PLAYPAUSE); // temporary solution
+      LedToggleNTimes(3);
       // PressInfo(4);
 
     }
     // if button 3 pressed we do this operations
     else if (data > 504) {
-
-      DigiKeyboard.sendKeyStroke(0x10, 2);
-      LedToggle();
+      DigiKeyboard.sendMediaKeyStroke(KEY_MEDIA_PLAYPAUSE);
+      LedToggleNTimes(2);
       // PressInfo(3);
     }
     // if button 2 pressed we do this operations
     else if (data > 333) {
-      DigiKeyboard.sendKeyStroke(0x02, 2);
-      LedToggle();
-      PressInfo(2);
+      DigiKeyboard.sendMediaKeyStroke(KEY_MEDIA_PREV);
+      // TODO unkown reason causes to pause media after pressing prev-next
+      DigiKeyboard.sendMediaKeyStroke(
+          KEY_MEDIA_PLAYPAUSE); // temporary solution
+      LedToggleNTimes(3);
+      // PressInfo(2);
     }
     // if button 1 pressed we do this operations
     else {
