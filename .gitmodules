@@ -1,3 +1,4 @@
-[submodule "lib/digisparkkeyboard"]
-	path = lib/digisparkkeyboard
-	url = https://github.com/mal1kc/digisparkkeyboard
+[submodule "digisparkkeyboard"]
+	path = lib/DigisParkKeyboard
+	url = https://github.com/mal1kc/DigisParkKeyboard
+	branch = main
