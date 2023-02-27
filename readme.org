@@ -6,9 +6,10 @@ read more detailed in [[https://lezzetlirobottarifleri.com/lazyboard-usengec-ama
 * libraries that used in code
 
 #+begin_src gitconfig :tangle .gitmodules
-[submodule "lib/digisparkkeyboard"]
-	path = lib/digisparkkeyboard
+[submodule "DigisParkKeyboard"]
+	path = lib/DigisParkKeyboard
 	url = https://github.com/mal1kc/digisparkkeyboard
+	branch = main
 #+end_src
 - [[https://github.com/mal1kc/digisparkkeyboard][lib/digisparkkeyboard]]
 ** coding tutorial and template code
