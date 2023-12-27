@@ -9,6 +9,7 @@
 // s4 read val:    658
 // s5 read val:    838
 // s6 read val:    1023
+
 /*
 ** button layout
 ** | -  -  | -S3- | | -  -  |
@@ -46,12 +47,12 @@ void setup() {
   LedToggle();
 }
 
-void PressInfo(int btn_id) {
-  DigiKeyboard.print("button pressed: ");
-  DigiKeyboard.print(btn_id);
-  DigiKeyboard.sendKeyStroke(KEY_ENTER);
-  LedToggle();
-}
+// void PressInfo(int btn_id) {
+//   DigiKeyboard.print("button pressed: ");
+//   DigiKeyboard.print(btn_id);
+//   DigiKeyboard.sendKeyStroke(KEY_ENTER);
+//   LedToggle();
+// }
 
 void LedToggleNTimes(int n) {
   uint8_t i = 0;
@@ -62,6 +63,44 @@ void LedToggleNTimes(int n) {
   } while (i < n);
 }
 
+void press1() {
+  // Send a key combination of CTRL + SHIFT + C
+  DigiKeyboard.sendKeyStroke(KEY_C, MOD_CONTROL_LEFT | MOD_SHIFT_LEFT);
+  LedToggleNTimes(3);
+}
+
+void press2() {
+  DigiKeyboard.sendMediaKeyStroke(KEY_MEDIA_PREV);
+  // TODO unkown reason causes to pause media after pressing prev-next
+  DigiKeyboard.sendMediaKeyStroke(KEY_MEDIA_PLAYPAUSE); // temporary solution
+  LedToggleNTimes(3);
+}
+
+void press3() {
+  DigiKeyboard.sendMediaKeyStroke(KEY_MEDIA_PLAYPAUSE);
+  LedToggle();
+}
+
+void press4() {
+  DigiKeyboard.sendMediaKeyStroke(KEY_MEDIA_NEXT);
+  // TODO unkown reason causes to pause media after pressing prev-next
+  DigiKeyboard.sendMediaKeyStroke(KEY_MEDIA_PLAYPAUSE); // temporary solution
+  LedToggleNTimes(3);
+}
+
+void press5() {
+  // Send a key combination of CTRL + SHIFT + V
+  DigiKeyboard.sendKeyStroke(KEY_V, MOD_CONTROL_LEFT | MOD_SHIFT_LEFT);
+  LedToggleNTimes(3);
+}
+
+void press6() {
+  // Send a key combination of ESC
+  // esc hid code is 0x29
+  DigiKeyboard.sendKeyStroke(0x29);
+  LedToggle();
+}
+
 void loop() {
 
   int data = analogRead(1);
@@ -69,41 +108,27 @@ void loop() {
   if (data > 100) {
     // if button 6 pressed we do this operations
     if (data > 1022) {
-      PressInfo(6);
+      press6();
     }
     // if button 5 pressed we do this operations
     else if (data > 837) {
-      PressInfo(5);
+      press5();
     }
     // if button 4 pressed we do this operations
     else if (data > 658) {
-
-      DigiKeyboard.sendMediaKeyStroke(KEY_MEDIA_NEXT);
-      // TODO unkown reason causes to pause media after pressing prev-next
-      DigiKeyboard.sendMediaKeyStroke(
-          KEY_MEDIA_PLAYPAUSE); // temporary solution
-      LedToggleNTimes(3);
-      // PressInfo(4);
-
+      press4();
     }
     // if button 3 pressed we do this operations
     else if (data > 504) {
-      DigiKeyboard.sendMediaKeyStroke(KEY_MEDIA_PLAYPAUSE);
-      LedToggleNTimes(2);
-      // PressInfo(3);
+      press3();
     }
     // if button 2 pressed we do this operations
     else if (data > 333) {
-      DigiKeyboard.sendMediaKeyStroke(KEY_MEDIA_PREV);
-      // TODO unkown reason causes to pause media after pressing prev-next
-      DigiKeyboard.sendMediaKeyStroke(
-          KEY_MEDIA_PLAYPAUSE); // temporary solution
-      LedToggleNTimes(3);
-      // PressInfo(2);
+      press2();
     }
     // if button 1 pressed we do this operations
     else {
-      PressInfo(1);
+      press1();
     }
   }
 

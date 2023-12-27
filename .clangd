@@ -1,3 +1,0 @@
-CompileFlags:
-  - "-I/usr/local/include"
-  - "-I./lib/DigisparkKeyboard"
