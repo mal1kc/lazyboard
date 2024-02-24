@@ -71,8 +71,6 @@ void press1() {
 
 void press2() {
   DigiKeyboard.sendMediaKeyStroke(KEY_MEDIA_PREV);
-  // TODO unkown reason causes to pause media after pressing prev-next
-  DigiKeyboard.sendMediaKeyStroke(KEY_MEDIA_PLAYPAUSE); // temporary solution
   LedToggleNTimes(3);
 }
 
@@ -83,8 +81,6 @@ void press3() {
 
 void press4() {
   DigiKeyboard.sendMediaKeyStroke(KEY_MEDIA_NEXT);
-  // TODO unkown reason causes to pause media after pressing prev-next
-  DigiKeyboard.sendMediaKeyStroke(KEY_MEDIA_PLAYPAUSE); // temporary solution
   LedToggleNTimes(3);
 }
 
