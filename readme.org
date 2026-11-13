@@ -34,6 +34,25 @@ references:
 - [[https://zadig.akeo.ie][Zadig]] / [[https://github.com/pbatard/libwdi][libwdi]] (driver installer, GPL)
 - [[https://docs.platformio.org/en/latest/boards/atmelavr/digispark-tiny.html][platformio digispark-tiny board]]
 
+* default layout (src/main.cpp)
+every button has a *short press* and a *hold* (>= 400ms) action. *hold S6* switches layer;
+the led blinks layer+1 times, and the layer is remembered after replug (eeprom).
+
+| button | layer 0 media: short | hold          | layer 1 desktop (windows): short | hold                         |
+|--------+----------------------+---------------+----------------------------------+------------------------------|
+| S1     | copy (ctrl+c)        | vol- (repeat) | prev virtual desktop (win+ctrl+←) | -                            |
+| S2     | prev track           | -             | snip region (win+shift+s)        | screenshot to file (win+prtsc) |
+| S3     | play/pause           | mute          | mic mute in calls (win+alt+k)    | lock (win+l)                 |
+| S4     | next track           | -             | next virtual desktop (win+ctrl+→) | task view (win+tab)          |
+| S5     | paste (ctrl+v)       | vol+ (repeat) | show desktop (win+d)             | clipboard history (win+v)    |
+| S6     | esc                  | switch layer  | esc                              | switch layer                 |
+
+- buttons without a hold action fire on press; the others fire on release (short) or after 400ms (hold).
+- change shortcuts in the =keymap= table in =src/main.cpp=. for linux terminals set =COPY_MODS= to =(MOD_CONTROL_LEFT | MOD_SHIFT_LEFT)=.
+- if buttons misfire, recalibrate with =examples/template_read_analog.ino= and update the =th[]= thresholds (midpoints between button readings).
+- =win+alt+k= only works on windows 11 in call apps that support it (teams etc.).
+- after flashing a new library version, windows may keep the old usb descriptor: if media keys act wrong, remove the device in device manager and replug.
+
 * libraries that used in code
 
 #+begin_src gitconfig :tangle .gitmodules
