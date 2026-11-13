@@ -1,0 +1,32 @@
+name: build windows uploader
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - tools/build-micronucleus-win.sh
+      - .github/workflows/micronucleus-win.yml
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y mingw-w64 make
+      - run: ./tools/build-micronucleus-win.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: micronucleus-win64
+          path: tools/win/
+      - name: attach to release
+        if: github.event_name == 'release'
+        run: |
+          cd tools/win && zip ../../micronucleus-win64.zip *
+          gh release upload "${{ github.event.release.tag_name }}" ../../micronucleus-win64.zip --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}

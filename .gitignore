@@ -5,3 +5,6 @@
 .vscode/
 compile_commands.json
 .cache
+
+# windows uploader binaries (built by tools/build-micronucleus-win.sh)
+tools/win/

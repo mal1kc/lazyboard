@@ -3,6 +3,37 @@
 * what is lazyboard
 read more detailed in [[https://lezzetlirobottarifleri.com/lazyboard-usengec-ama-uretken-kisiler-icin-kisisellestirilebilir-macropad/#Lazyboardu_ve_Komponentleri_Temin_Etme][lazyboard tutorial (Turkish)]]
 
+* uploading code
+#+begin_src sh
+pio run -t upload
+#+end_src
+start the upload first, then plug lazyboard in when micronucleus asks for the device.
+see [[./docs/encountred_issues.org][encountered issues]] for more upload problems.
+
+** uploading on windows
+on windows, the upload can fail with this popup:
+#+begin_example
+micronucleus.exe - System Error
+The code execution cannot proceed because libusb0.dll was not found.
+#+end_example
+platformio's =micronucleus.exe= needs =libusb0.dll= and the libusb-win32 driver, which windows doesn't have by default.
+
+1. install the driver: run [[https://zadig.akeo.ie][Zadig]], plug lazyboard in, pick the "Digispark Bootloader" / "Unknown Device" entry,
+   choose *libusb-win32* (not WinUSB) and install. the bootloader only shows up for a few seconds, so replug if needed.
+2. get the uploader with its dll, one of:
+   - download the =micronucleus-win64= artifact from this repo's GitHub Actions ("build windows uploader" workflow) or release assets
+   - build it on linux: =./tools/build-micronucleus-win.sh= (needs =mingw-w64=)
+3. put =micronucleus.exe= and =libusb0.dll= into =tools/win/=
+
+=scripts/win_uploader.py= (enabled in =platformio.ini=) uses =tools/win/= automatically on windows.
+if =libusb0.dll= is missing, the upload stops with a message pointing here instead of the popup.
+
+references:
+- [[https://github.com/micronucleus/micronucleus][micronucleus]] (uploader / bootloader, GPL)
+- [[https://github.com/mcuee/libusb-win32][libusb-win32]] (=libusb0.dll= and driver, LGPL)
+- [[https://zadig.akeo.ie][Zadig]] / [[https://github.com/pbatard/libwdi][libwdi]] (driver installer, GPL)
+- [[https://docs.platformio.org/en/latest/boards/atmelavr/digispark-tiny.html][platformio digispark-tiny board]]
+
 * libraries that used in code
 
 #+begin_src gitconfig :tangle .gitmodules
